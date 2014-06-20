@@ -5,7 +5,11 @@ userController = {
     portal_user.findOne({user_code: user_code}).done((err, usr)->
       res.json usr if usr
     )
+  test: (req, res)->
+    res.send 'lk'
+    dsfdsfdsfdsfd d
   page: (req, res)->
+    console.log __filename, __dirname
     pageindex = req.param('pageIndex')
     pagesize = req.param('pageSize')
     filter = {user_code: {'like': 'wei%'}}

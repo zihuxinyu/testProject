@@ -3,13 +3,13 @@
  */
 var puController = {
 
-    find:function(req,res){
-        var user_code=req.param('id');
+    find: function (req, res) {
+        var user_code = req.param('id');
 
         console.log(user_code);
         //user_code='weibh';
-        portal_user.findOne().where({user_code:user_code}).done(function (err,usr){
-           console.log(usr);
+        portal_user.findOne().where({user_code: user_code}).done(function (err, usr) {
+            console.log(usr);
             res.json(usr);
 
         });
@@ -20,34 +20,33 @@ var puController = {
     test: function (req, res) {
 
 
-        pageIndex=req.param('pageIndex');
-        pageSize=req.param('pageSize');
+        pageIndex = req.param('pageIndex');
+        pageSize = req.param('pageSize');
 
-        console.log(parseInt(pageIndex)+1);
+        console.log(parseInt(pageIndex) + 1);
 
-        var filters={user_code:{'like':'wei%'}};
-        var total=0;
+        var filters = {user_code: {'like': 'wei%'}};
+        var total = 0;
         portal_user.count(filters).exec(function (err, usr) {
 
             if (err) {
                 res.send(500, {error: 'db error'});
             } else if (usr) {
-                console.log(usr,'dsdsd');
+                console.log(usr, 'dsdsd');
                 console.log('dsdsd');
-                total=usr;
+                total = usr;
 
-                portal_user.find(filters).paginate({page:parseInt(pageIndex)+1,limit:pageSize}).exec(function (err, usr) {
+                portal_user.find(filters).paginate({page: parseInt(pageIndex) + 1, limit: pageSize}).exec(function (err, usr) {
                     if (err) {
                         res.send(500, {error: 'db error'});
                     } else if (usr) {
                         console.log(usr);
-                        res.json({'total':total,'data':usr});
+                        res.json({'total': total, 'data': usr});
                     }
                 })
             }
 
         });
-
 
 
     }
