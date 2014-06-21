@@ -1,4 +1,5 @@
-q=require 'q'
+q=require 'async'
+
 userController = {
   find: (req, res)->
     user_code = req.param('id')
@@ -13,23 +14,29 @@ userController = {
     .done (err,usr)=>
       console.log usr
   page: (req, res)->
-    console.log __filename, __dirname
-    pageindex = req.param('pageIndex')
-    pagesize = req.param('pageSize')
+
     filter = {user_code: {'like': 'wei%'}}
+    dm=portal_user
+    result=(dm,filter,req)=>
+      pageindex = req.param('pageIndex')
+      pagesize = req.param('pageSize')
+      q.parallel
+        data:(cb)->
+          dm.find(filter).paginate(page:parseInt(pageindex)+1,limit:pagesize).exec (err,usr)->
+                cb(null,usr)
+        total:(cb)->
+          dm.count(filter).exec (err,count)->
+                cb(null,count)
+        (err,results)->
+          console.log err if err
+          res.json results if not err?
+    result(dm,filter,req)
 
 
-    q.when [getcount,getdata], (total,data) =>
-      console.log totla,data
-      res.json {total: total, data: data}
 
-    getdata=portal_user.find(filter).exec (err, usr)->
-      console.log 'getdata'
-      usr
-    
-    getcount=portal_user.count(filter).exec (err, count)->
-        console.log 'getcount'
-        count
+
+
+
 
 
 

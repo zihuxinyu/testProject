@@ -7,6 +7,13 @@
  * @docs        :: http://sailsjs.org/#!documentation/policies
  *
  */
+
+
+
+module.exports =function(req, res, next) {
+    res.removeHeader('X-Powered-By');
+    return next();
+};
 module.exports = function(req, res, next) {
     console.log(req.target.controller,req.target.action);
     console.log(req);
