@@ -1,3 +1,4 @@
+q=require 'q'
 userController = {
   find: (req, res)->
     user_code = req.param('id')
@@ -6,23 +7,34 @@ userController = {
       res.json usr if usr
     )
   test: (req, res)->
-    res.send 'lk'
-    dsfdsfdsfdsfd d
+    portal_user.create
+     user_name:'test'
+     user_code:'weibbbbbb'
+    .done (err,usr)=>
+      console.log usr
   page: (req, res)->
     console.log __filename, __dirname
     pageindex = req.param('pageIndex')
     pagesize = req.param('pageSize')
     filter = {user_code: {'like': 'wei%'}}
-    total = 0
-    portal_user.count(filter).done(
-      (err, count)->
-        total = count if count?
-        portal_user.find(filter)
-        .paginate({page: parseInt(pageindex) + 1, limit: pagesize})
-        .exec((err, usr)->
-          res.json {total: total, data: usr} if usr?
-        )
-    )
+
+
+    q.when [getcount,getdata], (total,data) =>
+      console.log totla,data
+      res.json {total: total, data: data}
+
+    getdata=portal_user.find(filter).exec (err, usr)->
+      console.log 'getdata'
+      usr
+    
+    getcount=portal_user.count(filter).exec (err, count)->
+        console.log 'getcount'
+        count
+
+
+
+
+
 
 
 }
