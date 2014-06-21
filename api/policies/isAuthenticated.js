@@ -8,6 +8,8 @@
  *
  */
 module.exports = function(req, res, next) {
+    console.log(req.target.controller,req.target.action);
+    console.log(req);
 
   // User is allowed, proceed to the next policy, 
   // or if this is the last policy, the controller
