@@ -16,13 +16,6 @@ userController = {
     )
 
 
-    res.json 'ok'
-  test: (req, res)->
-    portal_user.create
-     user_name:'test'
-     user_code:'weibbbbbb'
-    .done (err,usr)=>
-      console.log usr
   page: (req, res)->
 
     filter = {'user_code': {'like': 'weiwei%'}}
