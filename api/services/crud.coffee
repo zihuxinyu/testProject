@@ -1,8 +1,61 @@
 q=require 'async'
 cblogic=require './cb'
-
+_ = require("underscore");
 
 class crud
+  ###
+  获取数据模型的主键，目前只支持一个主键
+  dm:dataModel
+  ###
+  getpk:(dm)->
+    _data=dm.definition
+    for d of _data
+      for y of _data[d]
+        if y=='primaryKey'
+#           console.log y,d
+          ret=d #找到含有主键定义的
+    ret
+
+  ###
+  得到模型含有的字段
+  返回[ 'user_code',
+  'user_name',
+  'topdpt',
+  'dpt_name',
+  'id',
+  'createdAt',
+  'updatedAt' ]
+  ###
+  getcloumns:(dm)->
+    _.keys( dm.definition)
+
+
+  ###
+  对模型的增删改保存
+  ###
+  save:(dm,req,cb)->
+    data=JSON.parse(req.param('data'))
+    id=@getpk(dm)
+    cc=@getcloumns(dm)
+
+    for d in data
+      columns={}#记录反馈的字段及值{'user_name':'zhangsanfeng','user_code':'jhjh'}
+
+      for _everycolumn of d
+        #修改的字段排除_state字段,排除主键
+        if  _everycolumn in cc  and _everycolumn!=id
+          columns[_everycolumn]=d[_everycolumn]
+
+      if d._state=='modified'
+        dm.update({id:d[id]},columns).exec (err,usr)->
+          cblogic(err,usr,cb)
+      if d._state=='added'
+        dm.create(columns).exec (err,usr)->
+          cblogic(err,usr,cb)
+      if d._state=='removed'
+        dm.destroy({id:d[id]}).exec (err,usr)->
+          cblogic(err,usr,cb)
+
   ###
   专用生成miniuigrid数据
   dm:dataModel

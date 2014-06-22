@@ -1,5 +1,7 @@
 q=require 'async'
 crud=require '../services/crud'
+_ = require("underscore");
+_.str = require('underscore.string');
 userController = {
   find: (req, res)->
     user_code = req.param('id')
@@ -7,21 +9,12 @@ userController = {
     portal_user.findOne({user_code: user_code}).done((err, usr)->
       res.json usr if usr
     )
-  create:(req,res)->
-    data=JSON.parse(req.param('data'))
+  save:(req,res)->
+    crud.save(portal_user,req,(err,usr)->
+      console.log err if err?
+      res.json "ok" if !err?
+    )
 
-    portal_user.update({'id':'53a5172b4dee7db68fc00384'},{'user_code':'weibsahhhhh','user_name':'ds'}).exec (err,ru)->
-      console.log ru
-
-    getpk=(dm)->
-      _data=dm.definition
-      for d of _data
-        for y of _data[d]
-          if y=='primaryKey'
-#           console.log y,d
-            ret=d #找到含有主键定义的
-      ret
-    console.log getpk(portal_user1)
 
     res.json 'ok'
   test: (req, res)->
@@ -32,7 +25,7 @@ userController = {
       console.log usr
   page: (req, res)->
 
-    filter = {'user_code': {'like': 'weib%'}}
+    filter = {'user_code': {'like': 'weiwei%'}}
     dm=portal_user
 
     crud.grid(dm,filter,req,(err,ru)->

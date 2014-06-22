@@ -3,8 +3,8 @@
         <table style="width:100%;">
             <tr>
                 <td style="width:100%;">
-                    <a class="mini-button" iconCls="icon-add" onclick="addRow()" plain="true" tooltip="增加...">增加</a>
-                    <a class="mini-button" iconCls="icon-remove" onclick="removeRow()" plain="true">删除</a>
+                    <a class="mini-button" iconCls="icon-add" onclick="addRow('datagrid1')" plain="true" tooltip="增加...">增加</a>
+                    <a class="mini-button" iconCls="icon-remove" onclick="removeRow('datagrid1')" plain="true">删除</a>
                     <span class="separator"></span>
                     <a class="mini-button" iconCls="icon-save" onclick="saveData()" plain="true">保存</a>
                 </td>
@@ -20,6 +20,7 @@
      editNextOnEnterKey="true"  editNextRowCell="true"
         >
     <div property="columns">
+        <div type="checkcolumn" ></div>
         <div type="indexcolumn" ></div>
 
         <div field="user_name" width="120" headerAlign="center" allowSort="true">姓名
@@ -48,21 +49,10 @@
         search();
     }
 
-    function addRow() {
-        var newRow = { name: "New Row" };
-        grid.addRow(newRow, 0);
 
-        grid.beginEditCell(newRow, "LoginName");
-    }
-    function removeRow() {
-        var rows = grid.getSelecteds();
-        if (rows.length > 0) {
-            grid.removeRows(rows, true);
-        }
-    }
     function saveData() {
 
-        saveGrid(grid, "/user/create")
+        saveGrid("datagrid1", "/user/save")
     }
 
     grid.on("celleditenter", function (e) {
