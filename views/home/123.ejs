@@ -1,12 +1,33 @@
-<div id="datagrid1" class="mini-datagrid" style="width:700px;height:280px;"
+<div style="width:800px;">
+    <div class="mini-toolbar" style="border-bottom:0;padding:0px;">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:100%;">
+                    <a class="mini-button" iconCls="icon-add" onclick="addRow()" plain="true" tooltip="增加...">增加</a>
+                    <a class="mini-button" iconCls="icon-remove" onclick="removeRow()" plain="true">删除</a>
+                    <span class="separator"></span>
+                    <a class="mini-button" iconCls="icon-save" onclick="saveData()" plain="true">保存</a>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="datagrid1" class="mini-datagrid" style="width:800px;height:280px;"
      url="/user/page"  idField="id"
-     sizeList="[5,10,20,50]" pageSize="10"
+     allowResize="true" pageSize="20"
+     allowCellEdit="true" allowCellSelect="true" multiSelect="true"
+     editNextOnEnterKey="true"  editNextRowCell="true"
         >
     <div property="columns">
         <div type="indexcolumn" ></div>
 
-        <div field="user_name" width="120" headerAlign="center">姓名</div>
-        <div field="user_code" width="120" headerAlign="center">姓名</div>
+        <div field="user_name" width="120" headerAlign="center" allowSort="true">姓名
+            <input property="editor" class="mini-textbox" style="width:100%;" minWidth="200" />
+        </div>
+        <div field="user_code" width="120" headerAlign="center" allowSort="true">姓名
+            <input property="editor" class="mini-textbox" style="width:100%;" minWidth="200" />
+        </div>
 
     </div>
 </div>
@@ -15,4 +36,40 @@
 
     var grid = mini.get("datagrid1");
     grid.load();
+    //////////////////////////////////////////////////////
+
+    function search() {
+        var key = mini.get("key").getValue();
+
+        grid.load({ key: key });
+    }
+
+    function onKeyEnter(e) {
+        search();
+    }
+
+    function addRow() {
+        var newRow = { name: "New Row" };
+        grid.addRow(newRow, 0);
+
+        grid.beginEditCell(newRow, "LoginName");
+    }
+    function removeRow() {
+        var rows = grid.getSelecteds();
+        if (rows.length > 0) {
+            grid.removeRows(rows, true);
+        }
+    }
+    function saveData() {
+
+        saveGrid(grid, "/user/create")
+    }
+
+    grid.on("celleditenter", function (e) {
+        var index = grid.indexOf(e.record);
+        if (index == grid.getData().length - 1) {
+            var row = {};
+            grid.addRow(row);
+        }
+    });
 </script>

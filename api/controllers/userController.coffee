@@ -1,5 +1,5 @@
 q=require 'async'
-
+crud=require '../services/crud'
 userController = {
   find: (req, res)->
     user_code = req.param('id')
@@ -7,6 +7,23 @@ userController = {
     portal_user.findOne({user_code: user_code}).done((err, usr)->
       res.json usr if usr
     )
+  create:(req,res)->
+    data=JSON.parse(req.param('data'))
+
+    portal_user.update({'id':'53a5172b4dee7db68fc00384'},{'user_code':'weibsahhhhh','user_name':'ds'}).exec (err,ru)->
+      console.log ru
+
+    getpk=(dm)->
+      _data=dm.definition
+      for d of _data
+        for y of _data[d]
+          if y=='primaryKey'
+#           console.log y,d
+            ret=d #找到含有主键定义的
+      ret
+    console.log getpk(portal_user1)
+
+    res.json 'ok'
   test: (req, res)->
     portal_user.create
      user_name:'test'
@@ -15,22 +32,15 @@ userController = {
       console.log usr
   page: (req, res)->
 
-    filter = {user_code: {'like': 'wei%'}}
+    filter = {'user_code': {'like': 'weib%'}}
     dm=portal_user
-    result=(dm,filter,req)=>
-      pageindex = req.param('pageIndex')
-      pagesize = req.param('pageSize')
-      q.parallel
-        data:(cb)->
-          dm.find(filter).paginate(page:parseInt(pageindex)+1,limit:pagesize).exec (err,usr)->
-                cb(null,usr)
-        total:(cb)->
-          dm.count(filter).exec (err,count)->
-                cb(null,count)
-        (err,results)->
-          console.log err if err
-          res.json results if not err?
-    result(dm,filter,req)
+
+    crud.grid(dm,filter,req,(err,ru)->
+
+      console.log err if err?
+      res.json ru
+    )
+
 
 
 
