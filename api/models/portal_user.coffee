@@ -1,5 +1,5 @@
 portal_user = {
-  adapter: 'mongo'
+  adapter: 'mysql'
   attributes:
     user_code: 'STRING'
     user_name: 'STRING'
