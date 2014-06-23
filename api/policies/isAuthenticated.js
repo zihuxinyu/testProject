@@ -10,21 +10,21 @@
 
 
 
-module.exports =function(req, res, next) {
+module.exports = function (req, res, next) {
     res.removeHeader('X-Powered-By');
     return next();
 };
-module.exports = function(req, res, next) {
-    console.log(req.target.controller,req.target.action);
-    console.log(req);
+module.exports = function (req, res, next) {
+    sails.log('isauthed',req.target.controller, req.target.action);
 
-  // User is allowed, proceed to the next policy, 
-  // or if this is the last policy, the controller
-  if (req.session.authenticated) {
+
+    // User is allowed, proceed to the next policy,
+    // or if this is the last policy, the controller
+    if (req.session.authenticated) {
+        return next();
+    }
     return next();
-  }
-
-  // User is not allowed
-  // (default res.forbidden() behavior can be overridden in `config/403.js`)
-  return res.forbidden('You are not permitted to perform this action.');
+    // User is not allowed
+    // (default res.forbidden() behavior can be overridden in `config/403.js`)
+    //return res.forbidden('You are not permitted to perform this action.');
 };
