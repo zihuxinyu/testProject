@@ -1,9 +1,9 @@
 crud = require '../services/crud'
 cblogic = require '../services/cb'
-cache= require '../services/cache'
 crypto = require('crypto')
 
-
+cache_manager = require 'cache-manager'
+memory_cache = cache_manager.caching({store: 'memory', max: 100, ttl: 10});
 
 userController = {
   find: (req, res)->
@@ -36,7 +36,7 @@ userController = {
     ss=JSON.stringify(req.route)+JSON.stringify(req.body)+JSON.stringify(req.query)+JSON.stringify(req.cookie)
     etag = crypto.createHash('md5').update(ss).digest('hex')
     console.log etag,ss
-    cache.memory_cache().wrap(etag,(cb)->
+    memory_cache.wrap(etag,(cb)->
       crud.grid(dm, filter, req,cb)
     (err,ru)->
         sails.log err if err?
