@@ -67,6 +67,7 @@ class crud
   cb:回调
   ###
   grid: (dm, filter, req, cb)->
+    sails.log filter
     pageIndex = req.param('pageIndex')
     pageSize = req.param('pageSize')
     sortField = req.param('sortField') + ""
@@ -94,6 +95,7 @@ class crud
       total: (cb)->
         dm.count(filter).exec (err, count)->
           cblogic.cblogic(err, count, cb)
+
       (err, results)->
         cblogic.cblogic(err, results, cb)
 

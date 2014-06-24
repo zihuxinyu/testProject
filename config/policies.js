@@ -20,7 +20,7 @@ module.exports.policies = {
 
     userController: {
         '*': 'baseauth',
-        page: 'isAuthenticated'
+        find: 'isAuthenticated'
     }
     /*
      // Here's an example of adding some policies to a controller
