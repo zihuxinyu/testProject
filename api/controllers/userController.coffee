@@ -1,8 +1,6 @@
 crud = require '../services/crud'
 cblogic = require '../services/cb'
-crypto = require('crypto')
 
-cache = (require ('../services/cache')).rcache()
 
 userController = {
   find: (req, res)->
@@ -28,19 +26,16 @@ userController = {
     )
 
   page:(req,res)->
-    filter = {'user_code': {'like': 'wei%'}}
+    filter = {'user_code': {'like': 'w%'}}
     dm = portal_user
 
 
-    ss=JSON.stringify(req.route)+JSON.stringify(req.body)+JSON.stringify(req.query)+JSON.stringify(req.cookie)
-    etag = crypto.createHash('md5').update(ss).digest('hex')
-    #console.log etag,ss
-    cache.wrap(etag,(cb)->
-      crud.grid(dm, filter, req,cb)
-    (err,ru)->
+
+    crud.grid_cache(dm, filter, req,
+      (err,ru)->
         sails.log err if err?
         if err? then res.send 'err' else res.send ru
-    )
+      )
 
 
 

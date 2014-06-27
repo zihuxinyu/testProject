@@ -1,6 +1,7 @@
 q = require 'async'
 cblogic = require './cb'
 _ = require "underscore"
+cache = (require ('../services/cache'))
 
 class crud
   ###
@@ -66,8 +67,9 @@ class crud
   req:request，用来获取param
   cb:回调
   ###
+
   grid: (dm, filter, req, cb)->
-    sails.log filter
+
     pageIndex = req.param('pageIndex')
     pageSize = req.param('pageSize')
     sortField = req.param('sortField') + ""
@@ -99,6 +101,15 @@ class crud
       (err, results)->
         cblogic.cblogic(err, results, cb)
 
+  grid_cache:(dm,filter,req,cb)->
+    uukey=cache.uureq(req,filter)
+    cache.rcache().wrap(uukey,(cb)->
+      #这里放我们自己的定义
+      @crud.grid(dm, filter, req,cb)
+
+    (err,gd)->
+         cblogic.cblogic(err, gd, cb)
+    )
 
 #返回实例化的类，直接引用即可
 module.exports = new crud()
