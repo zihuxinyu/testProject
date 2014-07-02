@@ -1,7 +1,8 @@
 q = require 'async'
-cblogic = require './cb'
+nextcb=require('./cb').nextcb
 _ = require "underscore"
 cache = (require ('../services/cache'))
+
 
 class crud
   ###
@@ -32,33 +33,61 @@ class crud
 
 
   ###
+  当个数据体保存
+  dm：dataModel
+  d：单个实体数据
+  req:request
+  cb：callback
+  ###
+  savesingle: (dm,d,req,cb)->
+    id = @getpk(dm)
+    cc = @getcloumns(dm)
+    columns = {} #记录反馈的字段及值{'user_name':'zhangsanfeng','user_code':'jhjh'}
+
+    for _everycolumn of d
+      #修改的字段排除_state字段,排除主键
+      if _everycolumn in cc and _everycolumn != id
+        columns[_everycolumn] = d[_everycolumn]
+
+    if d._state == 'modified'
+
+      #如果有updatedBy字段，自动更新为当前登录人得身份
+      if "updatedBy" in cc then columns['updatedBy']=req.cookies.user
+      dm.update({id: d[id]}, columns).exec (err, usr)->
+        nextcb(err, usr, cb)
+
+    if d._state == 'added'
+      #如果有createdBy字段，自动更新为当前登录人得身份
+      if "createdBy" in cc then columns['createdBy']=req.cookies.user
+      dm.create(columns).exec (err, usr)->
+        nextcb(err, usr, cb)
+
+    if d._state == 'removed'
+      dm.destroy({id: d[id]}).exec (err, usr)->
+        nextcb(err, usr, cb)
+  ###
   对模型的增删改保存
   ###
   save: (dm, req, cb)->
-    data = JSON.parse(req.param('data'))
-    if data.length == 0
-      cblogic.cblogic('nodata', '', cb)
-    else
-      id = @getpk(dm)
-      cc = @getcloumns(dm)
+      data = JSON.parse(req.param('data'))
+      if data.length == 0
+        cblogic.cblogic('nodata', '', cb)
+      else
 
-      for d in data
-        columns = {} #记录反馈的字段及值{'user_name':'zhangsanfeng','user_code':'jhjh'}
+        tasks=[]
+        for d,i in data
+          #创建一个闭包，才能将循环时参数传入
+          x=(dm,d,req,cb)->
+            tasks.push (cb)->
+              @crud.savesingle(dm,d,req,cb)
+          x(dm,d,req,cb)
 
-        for _everycolumn of d
-          #修改的字段排除_state字段,排除主键
-          if  _everycolumn in cc and _everycolumn != id
-            columns[_everycolumn] = d[_everycolumn]
+        #采用async异步执行
+        q.parallel tasks,(err,result)->
+          nextcb(err,result,cb)
 
-        if d._state == 'modified'
-          dm.update({id: d[id]}, columns).exec (err, usr)->
-            cblogic.cblogic(err, usr, cb)
-        if d._state == 'added'
-          dm.create(columns).exec (err, usr)->
-            cblogic.cblogic(err, usr, cb)
-        if d._state == 'removed'
-          dm.destroy({id: d[id]}).exec (err, usr)->
-            cblogic.cblogic(err, usr, cb)
+
+
 
   ###
   专用生成miniuigrid数据
@@ -69,7 +98,6 @@ class crud
   ###
 
   grid: (dm, filter, req, cb)->
-
     pageIndex = req.param('pageIndex')
     pageSize = req.param('pageSize')
     sortField = req.param('sortField') + ""
@@ -87,28 +115,28 @@ class crud
           .paginate(page: pageIndex, limit: pageSize)
           .sort("#{sortField} #{sortOrder} ")
           .exec (err, usr)->
-            cblogic.cblogic(err, usr, cb)
+            nextcb(err, usr, cb)
         else
           dm.find(filter)
           .paginate(page: pageIndex, limit: pageSize)
           .exec (err, usr)->
-            cblogic.cblogic(err, usr, cb)
+            nextcb(err, usr, cb)
     #计算总数部分
       total: (cb)->
         dm.count(filter).exec (err, count)->
-          cblogic.cblogic(err, count, cb)
+          nextcb(err, count, cb)
 
       (err, results)->
-        cblogic.cblogic(err, results, cb)
+        nextcb(err, results, cb)
 
-  grid_cache:(dm,filter,req,cb)->
-    uukey=cache.uureq(req,filter)
-    cache.rcache().wrap(uukey,(cb)->
+  grid_cache: (dm, filter, req, cb)->
+    uukey = cache.uureq(req, filter)
+    cache.rcache().wrap(uukey, (cb)->
       #这里放我们自己的定义
-      @crud.grid(dm, filter, req,cb)
+      @crud.grid(dm, filter, req, cb)
 
-    (err,gd)->
-         cblogic.cblogic(err, gd, cb)
+      (err, results)->
+        nextcb(err, results, cb)
     )
 
 #返回实例化的类，直接引用即可

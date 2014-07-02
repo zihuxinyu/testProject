@@ -4,6 +4,7 @@ local=require '../../config/local'
 crypto = require 'crypto'
 Serializer = require("mousse").Serializer
 hash = require('object-hash')
+
 class cache
 
   uureq :(req)->

@@ -17,6 +17,12 @@ module.exports.session = {
   // forcing them to log in again. 
   secret: 'd430f5a0f2e01f946ee31d71319e56bb',
 
+    // Set the session cookie expire time
+    // The maxAge is set by milliseconds, the example below is for 24 hours
+    //
+    cookie: {
+    maxAge: 24 * 60 * 60 * 1000
+    },
 
   // In production, uncomment the following lines to set up a shared redis session store
   // that can be shared across multiple Sails.js servers
@@ -28,14 +34,14 @@ module.exports.session = {
   //
   host: '134.44.36.125',
   port: 6379,
-  ttl: '10',
+  ttl: '100',
   db: 0,
   pass: '%$s%dd$%d#s^df#$a^fd%sf*^&(d*d&^)gh*^jk*e(*&e*s#%',
   prefix: 'sessions:'
 
 
   // Uncomment the following lines to use your Mongo adapter as a session store
-//  adapter:'mongo',
+  //adapter:'mongo',
 //
 //  host: 'localhost',
 //  port: 27017,

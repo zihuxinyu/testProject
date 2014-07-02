@@ -3,7 +3,8 @@
         <table style="width:100%;">
             <tr>
                 <td style="width:100%;">
-                    <a class="mini-button" iconCls="icon-add" onclick="addRow('datagrid1')" plain="true" tooltip="增加...">增加</a>
+                    <a class="mini-button" iconCls="icon-add" onclick="addRow('datagrid1')" plain="true"
+                       tooltip="增加...">增加</a>
                     <a class="mini-button" iconCls="icon-remove" onclick="removeRow('datagrid1')" plain="true">删除</a>
                     <span class="separator"></span>
                     <a class="mini-button" iconCls="icon-save" onclick="saveData()" plain="true">保存</a>
@@ -14,20 +15,24 @@
     </div>
 </div>
 <div id="datagrid1" class="mini-datagrid" style="width:800px;height:280px;"
-     url="/user/page"  idField="id"
+     url="/user/page" idField="id"
      allowResize="true" pageSize="20"
      allowCellEdit="true" allowCellSelect="true" multiSelect="true"
-     editNextOnEnterKey="true"  editNextRowCell="true"
+     editNextOnEnterKey="true" editNextRowCell="true"
         >
     <div property="columns">
-        <div type="checkcolumn" ></div>
-        <div type="indexcolumn" ></div>
+        <div type="checkcolumn"></div>
+        <div type="indexcolumn"></div>
 
         <div field="user_name" width="120" headerAlign="center" allowSort="true">姓名
-            <input property="editor" class="mini-textbox" style="width:100%;" minWidth="200" />
+            <input property="editor" class="mini-textbox" style="width:100%;" minWidth="200"/>
         </div>
-        <div field="user_code" width="120" headerAlign="center" allowSort="true">姓名
-            <input property="editor" class="mini-textbox" style="width:100%;" minWidth="200" />
+        <div field="user_code" width="120" headerAlign="center" allowSort="true">4A
+            <input property="editor" class="mini-textbox" style="width:100%;" minWidth="200"/>
+        </div>
+        <div field="opdate" width="120" headerAlign="center" allowSort="true" dateFormat="yyyy-MM-dd H:mm:ss">opdate
+            <input property="editor" class="mini-datepicker" format="yyyy-MM-dd H:mm:ss" timeFormat="H:mm:ss"
+                   showTime="true" showOkButton="true" showClearButton="false" style="width:100%;" minWidth="200"/>
         </div>
 
     </div>
