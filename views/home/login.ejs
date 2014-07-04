@@ -1,0 +1,59 @@
+
+<h1>用户登录</h1>
+
+
+<div id="form1">
+    <table>
+        <tr>
+            <td><label for="username$text">帐号：</label></td>
+            <td>
+                <input name="user_code"  class="mini-textbox" required="true" requiredErrorText="帐号不能为空"/>
+
+            </td>
+        </tr>
+        <tr>
+            <td><label for="pwd$text">密码：</label></td>
+            <td>
+                <input name="pwd" class="mini-password" vtype="minLength:5" required="true"
+                       minLengthErrorText="密码不能少于5个字符" value="1234567890"/>
+
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input value="Login" type="button" onclick="submitForm()"/>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<script type="text/javascript">
+    mini.parse();
+
+    function submitForm() {
+
+        var form = new mini.Form("#form1");
+
+        form.validate();
+        if (form.isValid() == false) return;
+
+        //提交数据
+        var data = form.getData();
+        var json = mini.encode(data);
+        $.ajax({
+            url: "/user/login",
+            type: "post",
+            data: { Data: json },
+            success: function (text) {
+               // alert("提交成功，返回结果:" + text.result);
+                if (text.result==='ok'){
+                    location.href='/';
+                }
+
+            }
+        });
+    }
+
+</script>

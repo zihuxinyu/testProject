@@ -1,5 +1,6 @@
 stringifyDate = require '../services/jsondate'
 
+
 class cblogic
   ###
     回调函数逻辑处理
@@ -19,7 +20,8 @@ class cblogic
     #如果出错就返回err，无错误然后result
     #stringifyDate处理时间问题
 
-    if err? then res.send 'err' else res.send stringifyDate.stringify(result)
+    if err? then res.json  {result:'error'} else res.send stringifyDate.stringify(result)
+    #if err? then res.send 'err' else res.json (result)
 
 module.exports=new cblogic()
 

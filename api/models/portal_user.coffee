@@ -9,8 +9,5 @@ portal_user = {
     updatedBy:'STRING'
     opdate:"DATETIME"
 
-
-
-
 }
 module.exports = portal_user
