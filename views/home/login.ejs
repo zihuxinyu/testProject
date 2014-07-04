@@ -1,4 +1,3 @@
-
 <h1>用户登录</h1>
 
 
@@ -7,7 +6,7 @@
         <tr>
             <td><label for="username$text">帐号：</label></td>
             <td>
-                <input name="user_code"  class="mini-textbox" required="true" requiredErrorText="帐号不能为空"/>
+                <input name="user_code" class="mini-textbox" required="true" requiredErrorText="帐号不能为空"/>
 
             </td>
         </tr>
@@ -47,9 +46,12 @@
             type: "post",
             data: { Data: json },
             success: function (text) {
-               // alert("提交成功，返回结果:" + text.result);
-                if (text.result==='ok'){
-                    location.href='/';
+                // alert("提交成功，返回结果:" + text.result);
+                if (text.result === 'ok') {
+                    location.href = '/index';
+                }
+                else {
+                    error('用户名密码错误！')
                 }
 
             }

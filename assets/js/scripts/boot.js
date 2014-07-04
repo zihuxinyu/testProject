@@ -96,10 +96,20 @@ function AddCSSLink(id, url, doc) {
 function alert(str) {
     mini.showTips({
         content: "<b>" + str + "</b> ",
-        state: "warning",
+        state: "success",
         x: "center",
         y: "top",
         timeout: 1000
+    });
+}
+
+function error(str) {
+    mini.showTips({
+        content: "<b>" + str + "</b> ",
+        state: "danger",
+        x: "center",
+        y: "top",
+        timeout: 3000
     });
 }
 

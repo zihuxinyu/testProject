@@ -1,94 +1,161 @@
-<!-- Default home page -->
-dsfdsfdsafdsfds
-<link type="text/css" href='http://sailsjs.org/styles/fonts.css' rel='stylesheet'/>
-<style>
-    /* Styles included inline since you'll probably be deleting this page anyway */
-    html,body{text-align:left;font-size:1em}html,body,img,form,textarea,input,fieldset,div,p,div,ul,li,ol,dl,dt,dd,h1,h2,h3,h4,h5,h6,pre,code{margin:0;padding:0}ul,li{list-style:none}img{display:block}a img{border:0}a{text-decoration:none;font-weight:normal;font-family:inherit}*:active,*:focus{outline:0;-moz-outline-style:none}h1,h2,h3,h4,h5,h6{font-weight:normal}div.clear{clear:both}.clearfix:after{clear:both;content:".";display:block;font-size:0;height:0;line-height:0;visibility:hidden}body{font-family:"Open Sans",Arial,sans-serif;font-weight:300;font-size:15px}h1{color:#0c8da0;font-size:2em;font-weight:300}h2{font-size:1.5em;font-weight:300;margin-top:4%}h3{font-size:1.25em;font-weight:300;font-style:italic;margin-bottom:5px}h4{color:#0c8da0;font-weight:300;font-size:1.5em}span{font-weight:700}ul{margin-top:5%;margin-bottom:5%}a{text-decoration:none;color:inherit}p{margin-bottom:7px;font-size:.9em}.container{max-width:997px;margin:0 auto;padding:0 4%}.sprite{font-weight:normal;background:url(http://sailsjs.org/images/newapp.sprite.png) no-repeat}.top-bar{position:relative;padding-top:10px;background-color:#001c20;height:55px}.main{float:left;max-width:610px;height:555px;margin-top:50px}.steps{height:250px}.getting-started p{ margin-bottom: 30px; line-height: 26px; }.getting-started div{float:left;width:540px}.getting-started li{clear:both;height:60px;margin-top:20px;margin-bottom:20px}.getting-started .sprite{margin-left:10px;padding-left:60px;height:42px;width:0}.getting-started .one{background-position:0 0}.getting-started .two{background-position:0 -42px}.getting-started .three{background-position:0 -83px}.delete{margin-top:5%;height:52px;background:#e3f0f1;border:1px solid #118798;color:#118798;clear:both}.delete .sprite{margin-top:10px;margin-bottom:10px;margin-left:9%;padding-left:42px;padding-top:7px;height:25px;background-position:0 -126px}.delete a{color:#0c8da0;font-weight:bold;padding-left:1%}.side-bar{max-width:327px;height:555px;float:left;border-left:1px solid #0c8da0;margin-left:25px;margin-top:50px;padding-left:25px}.side-bar ul{margin-bottom:10%}.side-bar ul li{margin-top:5px;margin-bottom:.25em}.side-bar ul li a{margin-bottom:.25em}.side-bar .sprite{padding-left:25px}.side-bar .single_page{background-position:0 -199px}.side-bar .traditional{background-position:0 -219px}.side-bar .realtime{background-position:0 -179px}.side-bar .api{background-position:0 -158px}.boxy{font-family:Courier,"Courier New",sans-serif;background-color:#e4edec;border:1px solid #d0d6d6;padding-left:5px;padding-right:5px;padding-top:2px;padding-bottom:2px;font-weight:100}.sixteen{margin-right:10px}.nineteen{margin-right:7px}
-        .main { width: 100%; }
-        body { min-width: 925px; }
+
+<style type="text/css">
+    html, body {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .header {
+        background: url(header.gif) repeat-x;
+    }
+
+    .header div {
+        font-family: 'Trebuchet MS', Arial, sans-serif;
+        font-size: 25px;
+        line-height: 60px;
+        padding-left: 10px;
+        font-weight: bold;
+        color: #333;
+    }
+
+
+    .mini-layout-region-south img {
+        vertical-align: top;
+    }
 </style>
-<!--[if IE 7]>
-    <style>
-    .getting-started li{overflow:visible;clear:both}.delete{width:690px}
-    </style>
-<![endif]-->
 
-<div class="top-bar">
-    <div class="container clearfix">
-        <img class="logo" src="http://sailsjs.org/images/sails-logo.jpg" />
-    </div>
-</div>
+<div class="mini-layout" style="width:100%;height:100%;">
+    <div title="north" region="north" class="header" bodyStyle="overflow:hidden;" height="60" showHeader="false"
+         showSplit="true">
+        <div>数据库任务系统</div>
 
-<div class="container clearfix">
-    <div class="main">
-        <h1 id="main-title"><%= __('Welcome') %></h1>
-        <h2>Getting started</h2>
-        <p>Don't worry, we've got your back.</p>
-        <div class="steps">
-            <ul class="getting-started">
-                <li>
-                    <div class="sprite one"></div>
-                    <div>
-                        <h3>Get your API going.</h3>
-                        <p>
-                            Run <span class="boxy">sails generate foo</span>.  This will create a model <span class="boxy">Foo</span> and controller <span class="boxy">FooController</span>
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    <div class="sprite two"></div>
-                    <div>
-                        <h3>
-                            Lift your app.
-                        </h3>
-                        <p>
-                            Run <span class="boxy">sails lift</span> to start up your app.  If you visit <span class="boxy">http://localhost:1337/foo</span> in your browser, you'll see a socket.io-compatible REST API was generated for your 'Foo' model.
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    <div class="sprite three"></div>
-                    <div>
-                        <h3>
-                            Dive in and start building.
-                        </h3>
-                        <p>From here, you can modify your models, create custom controller methods as Express middleware, and create custom routes (routes are set up in <span class="boxy">config/routes.js</span>).  Visit <a href="http://sailsjs.org">the Sails website</a> for more information on next steps.</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="delete">
-            <div class="sprite">You're looking at: <span class="boxy">views/home/index.ejs</span></div>
+
+        <div style="position:absolute;right:12px;bottom:10px;font-size:12px;line-height:25px;font-weight:normal;">
+            选择皮肤：
+            <select id="selectSkin" onchange="onSkinChange(this.value)" style="width:100px;">
+
+                <option value="">default</option>
+                <option value="blue">Blue</option>
+                <option value="gray">Gray</option>
+                <option value="olive2003">Olive2003</option>
+                <option value="blue2003">Blue2003</option>
+                <option value="blue2010">Blue2010</option>
+            </select>
         </div>
     </div>
-    <div class="side-bar">
-        <h4 id="new">
-            New to Sails?
-        </h4>
-        <ul>
-            <li>
-                <a href="http://sailsjs.org">Visit sailsjs.org</a>
-            </li>
-            <li>
-                <a href="http://sailsjs.org/#!documentation">Documentation</a>
-            </li>
-        </ul>
-        <h4>
-            Next Steps
-        </h4>
-        <ul>
-            <li class="sprite single_page">
-                <a target="_blank" href="http://sailsjs.org">Build a single page app</a>
-            </li>
-            <li class="sprite traditional">
-                <a target="_blank" href="http://sailsjs.org">Build a traditional webapp</a>
-            </li>
-            <li class="sprite realtime">
-                <a target="_blank" href="http://sailsjs.org">Build a realtime app</a>
-            </li>
-            <li class="sprite api">
-                <a target="_blank" href="http://sailsjs.org">Build an API</a>
-            </li>
+    <div showHeader="false" region="south" style="border:0;text-align:center;" height="25" showSplit="false">
+        Copyright © 数据库自动任务
+    </div>
+    <div region="west" title="导航菜单" showHeader="true" bodyStyle="padding-left:1px;" showSplitIcon="true" width="230"
+         minWidth="100" maxWidth="350">
+        <!--OutlookTree-->
+        <div id="leftTree" class="mini-outlooktree" url="/index/menu" onnodeclick="onNodeSelect"
+             textField="text" idField="id" parentField="pid"
+                >
+        </div>
+    </div>
+    <div title="center" region="center" style="border:0;">
+        <!--Tabs-->
+        <div id="mainTabs" class="mini-tabs" activeIndex="2" style="width:100%;height:100%;"
+             plain="false" contextMenu="#tabsMenu"
+             onactivechanged="onTabsActiveChanged"
+                >
+            <div title="首页" name="first">
+            </div>
+
+        </div>
+
+
+        <ul id="tabsMenu" class="mini-contextmenu" onbeforeopen="onBeforeOpen">
+            <li iconCls="icon-close" onclick="closeTab">关闭标签页</li>
+            <li iconCls="icon-split" onclick="closeAllBut">关闭其他标签页</li>
+            <li iconCls="icon-remove" onclick="closeAll">关闭所有标签页</li>
+            <li iconCls="icon-reload" onclick="reload">重新加载</li>
+            <li iconCls="icon-folderopen" onclick="openblank">新窗口打开</li>
         </ul>
     </div>
 </div>
+
+<script type="text/javascript">
+    mini.parse();
+
+    var tree = mini.get("leftTree");
+
+    function showTab(node) {
+        var tabs = mini.get("mainTabs");
+
+        var id = "tab$" + node.id;
+        var tab = tabs.getTab(id);
+        if (!tab) {
+            tab = {};
+            tab._nodeid = node.id;
+            tab.name = id;
+            tab.title = node.text;
+            tab.showCloseButton = true;
+
+            tab.url = node.url;
+
+            tabs.addTab(tab);
+        }
+        tabs.activeTab(tab);
+    }
+
+    function onNodeSelect(e) {
+        var node = e.node;
+        var isLeaf = e.isLeaf;
+
+        if (isLeaf) {
+            showTab(node);
+        }
+    }
+
+
+
+
+    function onTabsActiveChanged(e) {
+        var tabs = e.sender;
+        var tab = tabs.getActiveTab();
+        if (tab && tab._nodeid) {
+
+            var node = tree.getNode(tab._nodeid);
+            if (node && !tree.isSelectedNode(node)) {
+                tree.selectNode(node);
+            }
+        }
+    }
+
+    var tabs = mini.get("mainTabs");
+    var currentTab = null;
+
+    function onBeforeOpen(e) {
+        currentTab = tabs.getTabByEvent(e.htmlEvent);
+        if (!currentTab) {
+            e.cancel = true;
+        }
+    }
+
+    ///////////////////////////
+    function closeTab() {
+        tabs.removeTab(currentTab);
+    }
+    function closeAllBut() {
+        tabs.removeAll(currentTab);
+    }
+    function closeAll() {
+        tabs.removeAll();
+    }
+    function reload()
+    {
+
+        tabs.reloadTab(currentTab);
+    }
+    function openblank()
+    {
+        window.open(currentTab.url, "_blank");
+
+    }
+</script>

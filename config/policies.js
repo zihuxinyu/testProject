@@ -17,10 +17,12 @@ module.exports.policies = {
     // Default policy for all controllers and actions
     // (`true` allows public access)
     '*': 'baseauth',
-
+    indexController:{
+        '*':'baseauth'
+    },
     userController: {
         '*': 'baseauth',
-        find: 'isAuthenticated'
+        login: true   /*排除登录页面*/
     }
     /*
      // Here's an example of adding some policies to a controller

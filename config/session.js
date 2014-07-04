@@ -34,7 +34,7 @@ module.exports.session = {
   //
   host: '134.44.36.125',
   port: 6379,
-  ttl: '100',
+  ttl: 24 * 60 * 60 * 1000,/*保存时间一天*/
   db: 0,
   pass: '%$s%dd$%d#s^df#$a^fd%sf*^&(d*d&^)gh*^jk*e(*&e*s#%',
   prefix: 'sessions:'
