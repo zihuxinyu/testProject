@@ -1,13 +1,13 @@
 portal_user = {
   adapter: 'mysql'
   attributes:
-    user_code: 'STRING'
-    user_name: 'STRING'
-    topdpt: 'STRING'
-    dpt_name: 'STRING'
-    createdBy:'STRING'
-    updatedBy:'STRING'
-    opdate:"DATETIME"
+    user_code: 'string'
+    user_name: 'string'
+    topdpt: 'string'
+    dpt_name: 'string'
+    createdBy:'string'
+    updatedBy:'string'
+    opdate:"datetime"
 
 }
 module.exports = portal_user

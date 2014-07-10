@@ -71,7 +71,7 @@ class crud
   save: (dm, req, cb)->
       data = JSON.parse(req.param('data'))
       if data.length == 0
-        cblogic.cblogic('nodata', '', cb)
+        nextcb('nodata', '', cb)
       else
 
         tasks=[]

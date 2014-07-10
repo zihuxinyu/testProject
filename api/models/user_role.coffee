@@ -1,6 +1,6 @@
 #用户与角色组关系
 user_role = {
-  adapter: 'mysql'
+  adapter: 'mongo'
   attributes:
     user_code: 'string'
     groupid: 'string'

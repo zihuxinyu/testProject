@@ -15,6 +15,7 @@ userController = {
         req.session.user_name=usr.user_name
         res.json {result:'ok'}
 
+
       else
         res.json {result:'无此用户'}
 
@@ -29,6 +30,7 @@ userController = {
 
     crud.grid dm, filter, req,
       (err,results)->
+        sails.log "chaxunle"
         cbres(err,results,res)
 
 }

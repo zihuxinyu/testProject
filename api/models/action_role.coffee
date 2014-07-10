@@ -1,6 +1,6 @@
 # controller action 与 角色组关系
 action_role = {
-  adapter: 'mysql'
+  adapter: 'mongo'
   attributes:
     controller: 'string'
     action: 'string'

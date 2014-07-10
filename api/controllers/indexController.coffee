@@ -1,8 +1,19 @@
+request = require('request')
 indexController = {
 
   index: (req, res)->
     res.view('home/index')
+  doit: (i)->
+
+    request 'http://www.cnblogs.com', (err,response,body)->
+      if !err and response.statusCode==200
+        sails.log body
+    sails.log i
   menu: (req, res)->
+    list=[1...200]
+    for x in list
+      indexController.doit x
+
     s = [
       {id: "lists", text: "自动任务管理"},
       {id: "sqllist", text: "任务列表", pid: "lists", url: '/user/index'},
